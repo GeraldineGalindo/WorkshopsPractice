@@ -9,14 +9,7 @@ namespace Workshops.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Status State { get; set; }
-    }
-
-    public enum Status
-    {
-        SCHEDULED,
-        POSPONED,
-        CANCELLED
+        public string State { get; set; }
     }
 
 }
