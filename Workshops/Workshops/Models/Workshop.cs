@@ -9,7 +9,7 @@ namespace Workshops.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Status status { get; set; }
+        public Status State { get; set; }
     }
 
     public enum Status
