@@ -9,9 +9,9 @@ using Workshops.Models;
 
 namespace Workshops.Controllers
 {
-    
+
     [ApiController]
-    public class WorkshopsController : Controller
+    public class WorkshopsController : ControllerBase
     {
         private readonly IWorkshopService service;
         public WorkshopsController(IWorkshopService service)
@@ -31,6 +31,21 @@ namespace Workshops.Controllers
             {
 
                 return NoContent();
+            }
+        }
+
+        [Route("api/workshops/{workshopId}")]
+        [HttpGet]
+        public ActionResult<Workshop> GetWorkshopById([FromRoute] int workshopId)
+        {
+            try
+            {
+                return Ok(service.GetWorkshopById(workshopId));
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
             }
         }
     }

@@ -39,7 +39,7 @@ namespace Workshops.BusinessLogic
 
         public Workshop GetWorkshopById(int workshopId)
         {
-            throw new NotImplementedException();
+            return workshops.SingleOrDefault(w => w.Id == workshopId);
         }
 
         public bool PosponeWorkshop(int workshopId)
