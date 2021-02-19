@@ -24,7 +24,11 @@ namespace Workshops.BusinessLogic
 
         public Workshop CreateWorkshop(Workshop workshop)
         {
-            throw new NotImplementedException();
+            var nextId = workshops.Count == 0 ? 1 : workshops.Last().Id + 1;
+            workshop.Id = nextId;
+            workshop.State = Status.SCHEDULED;
+            workshops.Add(workshop);
+            return workshop;
         }
 
         public bool DeleteWorkshop(int workshopId)

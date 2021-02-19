@@ -48,5 +48,21 @@ namespace Workshops.Controllers
                 return NotFound();
             }
         }
+
+        [Route("api/workshops")]
+        [HttpPost]
+        public ActionResult<Workshop> CreateWorkshop([FromBody] Workshop workshop)
+        {
+            try
+            {
+                var createdWorkshop = service.CreateWorkshop(workshop);
+                return Created("api/workshops/" + createdWorkshop.Id, createdWorkshop);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
