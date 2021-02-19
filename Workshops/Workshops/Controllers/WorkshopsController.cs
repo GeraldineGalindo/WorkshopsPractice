@@ -93,5 +93,20 @@ namespace Workshops.Controllers
                 return NotFound();
             }
         }
+
+        [Route("api/workshops/{workshopId}/pospone")]
+        [HttpPut]
+        public ActionResult<Workshop> PosponeWorkshopById([FromRoute] int workshopId)
+        {
+            try
+            {
+                return Ok(service.PosponeWorkshop(workshopId));
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+        }
     }
 }

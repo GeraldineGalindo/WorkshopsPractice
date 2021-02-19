@@ -47,9 +47,11 @@ namespace Workshops.BusinessLogic
             return workshops.SingleOrDefault(w => w.Id == workshopId);
         }
 
-        public bool PosponeWorkshop(int workshopId)
+        public Workshop PosponeWorkshop(int workshopId)
         {
-            throw new NotImplementedException();
+            var workshopToPospone = workshops.SingleOrDefault(w => w.Id == workshopId);
+            workshopToPospone.State = Status.POSPONED;
+            return workshopToPospone;
         }
 
         public Workshop UpdateWorkshop(int workshopId, Workshop workshop)
