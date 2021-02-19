@@ -33,7 +33,7 @@ namespace Workshops.BusinessLogic
 
         public bool DeleteWorkshop(int workshopId)
         {
-            var workshopToDelete = workshops.Single(w => w.Id == workshopId);
+            var workshopToDelete = workshops.SingleOrDefault(w => w.Id == workshopId);
             return workshops.Remove(workshopToDelete);
         }
 
@@ -52,9 +52,12 @@ namespace Workshops.BusinessLogic
             throw new NotImplementedException();
         }
 
-        public Workshop UpdateWorkshop(Workshop workshop)
+        public Workshop UpdateWorkshop(int workshopId, Workshop workshop)
         {
-            throw new NotImplementedException();
+            var workshopToUpdate = workshops.SingleOrDefault(w => w.Id == workshopId);
+            workshopToUpdate.Name = workshop.Name;
+            workshopToUpdate.State = workshop.State;
+            return workshopToUpdate;
         }
     }
 }

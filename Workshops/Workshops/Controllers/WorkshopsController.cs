@@ -78,5 +78,20 @@ namespace Workshops.Controllers
                 return NotFound();
             }
         }
+
+        [Route("api/workshops/{workshopId}")]
+        [HttpPut]
+        public ActionResult<Workshop> UpdateWorkshop([FromRoute] int workshopId,[FromBody] Workshop workshop)
+        {
+            try
+            {
+                return Ok(service.UpdateWorkshop(workshopId, workshop));
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+        }
     }
 }
