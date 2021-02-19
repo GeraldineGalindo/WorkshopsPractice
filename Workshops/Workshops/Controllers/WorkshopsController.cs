@@ -60,8 +60,22 @@ namespace Workshops.Controllers
             }
             catch (Exception)
             {
+                return BadRequest();
+            }
+        }
 
-                throw;
+        [Route("api/workshops/{workshopId}")]
+        [HttpDelete]
+        public ActionResult<bool> DeleteWorkshopById([FromRoute] int workshopId)
+        {
+            try
+            {
+                return Ok(service.DeleteWorkshop(workshopId));
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
             }
         }
     }

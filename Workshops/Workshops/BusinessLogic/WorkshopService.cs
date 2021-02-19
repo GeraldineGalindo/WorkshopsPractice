@@ -33,7 +33,8 @@ namespace Workshops.BusinessLogic
 
         public bool DeleteWorkshop(int workshopId)
         {
-            throw new NotImplementedException();
+            var workshopToDelete = workshops.Single(w => w.Id == workshopId);
+            return workshops.Remove(workshopToDelete);
         }
 
         public IEnumerable<Workshop> GetAllWorkshops()
