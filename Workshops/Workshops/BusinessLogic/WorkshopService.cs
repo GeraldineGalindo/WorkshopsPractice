@@ -17,9 +17,11 @@ namespace Workshops.BusinessLogic
             workshops.Add(new Workshop { Id = 2, Name = "Object Oriented Programming", State = Status.SCHEDULED });
             workshops.Add(new Workshop { Id = 3, Name = "Branching and Modelling", State = Status.SCHEDULED });
         }
-        public bool CancelWorkshop(int workshopId)
+        public Workshop CancelWorkshop(int workshopId)
         {
-            throw new NotImplementedException();
+            var workshopToCancel = workshops.SingleOrDefault(w => w.Id == workshopId);
+            workshopToCancel.State = Status.CANCELLED;
+            return workshopToCancel;
         }
 
         public Workshop CreateWorkshop(Workshop workshop)

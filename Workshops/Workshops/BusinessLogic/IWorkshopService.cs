@@ -14,6 +14,6 @@ namespace Workshops.BusinessLogic
         public Workshop UpdateWorkshop(int workshopId, Workshop workshop);
         public bool DeleteWorkshop(int workshopId);
         public Workshop PosponeWorkshop(int workshopId);
-        public bool CancelWorkshop(int workshopId);
+        public Workshop CancelWorkshop(int workshopId);
     }
 }

@@ -108,5 +108,20 @@ namespace Workshops.Controllers
                 return NotFound();
             }
         }
+
+        [Route("api/workshops/{workshopId}/cancel")]
+        [HttpPut]
+        public ActionResult<Workshop> CancelWorkshopById([FromRoute] int workshopId)
+        {
+            try
+            {
+                return Ok(service.CancelWorkshop(workshopId));
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+        }
     }
 }
