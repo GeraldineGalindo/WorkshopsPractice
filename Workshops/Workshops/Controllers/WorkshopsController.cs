@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workshops.BusinessLogic;
+using Workshops.Exceptions;
 using Workshops.Models;
 
 namespace Workshops.Controllers
@@ -27,10 +28,13 @@ namespace Workshops.Controllers
             {
                 return Ok(service.GetAllWorkshops());
             }
-            catch (Exception)
+            catch (EmptyCollectionException ex)
             {
-
-                return NoContent();
+                return StatusCode(StatusCodes.Status400BadRequest, $"Something bad happened: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
             }
         }
 
@@ -42,10 +46,13 @@ namespace Workshops.Controllers
             {
                 return Ok(service.GetWorkshopById(workshopId));
             }
-            catch (Exception)
+            catch (NotFoundItemException ex)
             {
-
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound, $"Something bad happened: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
             }
         }
 
@@ -58,9 +65,9 @@ namespace Workshops.Controllers
                 var createdWorkshop = service.CreateWorkshop(workshop);
                 return Created("api/workshops/" + createdWorkshop.Id, createdWorkshop);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
             }
         }
 
@@ -72,10 +79,13 @@ namespace Workshops.Controllers
             {
                 return Ok(service.DeleteWorkshop(workshopId));
             }
-            catch (Exception)
+            catch (NotFoundItemException ex)
             {
-
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound, $"Something bad happened: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
             }
         }
 
@@ -87,10 +97,17 @@ namespace Workshops.Controllers
             {
                 return Ok(service.UpdateWorkshop(workshopId, workshop));
             }
-            catch (Exception)
+            catch (DataMismatchException ex)
             {
-
-                return NotFound();
+                return StatusCode(StatusCodes.Status409Conflict, $"Something bad happened: {ex.Message}");
+            }
+            catch (NotFoundItemException ex)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, $"Something bad happened: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
             }
         }
 
@@ -102,10 +119,13 @@ namespace Workshops.Controllers
             {
                 return Ok(service.PosponeWorkshop(workshopId));
             }
-            catch (Exception)
+            catch (NotFoundItemException ex)
             {
-
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound, $"Something bad happened: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
             }
         }
 
@@ -117,10 +137,13 @@ namespace Workshops.Controllers
             {
                 return Ok(service.CancelWorkshop(workshopId));
             }
-            catch (Exception)
+            catch (NotFoundItemException ex)
             {
-
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound, $"Something bad happened: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
             }
         }
     }
