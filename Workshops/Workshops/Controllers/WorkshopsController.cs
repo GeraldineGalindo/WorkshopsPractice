@@ -14,10 +14,10 @@ namespace Workshops.Controllers
     [ApiController]
     public class WorkshopsController : ControllerBase
     {
-        private readonly IWorkshopService service;
+        private readonly IWorkshopService _service;
         public WorkshopsController(IWorkshopService service)
         {
-            this.service = service;
+            this._service = service;
         }
 
         [Route("api/workshops")]
@@ -26,7 +26,7 @@ namespace Workshops.Controllers
         {
             try
             {
-                return Ok(service.GetAllWorkshops());
+                return Ok(_service.GetAllWorkshops());
             }
             catch (EmptyCollectionException ex)
             {
@@ -44,7 +44,7 @@ namespace Workshops.Controllers
         {
             try
             {
-                return Ok(service.GetWorkshopById(workshopId));
+                return Ok(_service.GetWorkshopById(workshopId));
             }
             catch (NotFoundItemException ex)
             {
@@ -62,7 +62,7 @@ namespace Workshops.Controllers
         {
             try
             {
-                var createdWorkshop = service.CreateWorkshop(workshop);
+                var createdWorkshop = _service.CreateWorkshop(workshop);
                 return Created("api/workshops/" + createdWorkshop.Id, createdWorkshop);
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace Workshops.Controllers
         {
             try
             {
-                return Ok(service.DeleteWorkshop(workshopId));
+                return Ok(_service.DeleteWorkshop(workshopId));
             }
             catch (NotFoundItemException ex)
             {
@@ -95,7 +95,7 @@ namespace Workshops.Controllers
         {
             try
             {
-                return Ok(service.UpdateWorkshop(workshopId, workshop));
+                return Ok(_service.UpdateWorkshop(workshopId, workshop));
             }
             catch (DataMismatchException ex)
             {
@@ -117,7 +117,7 @@ namespace Workshops.Controllers
         {
             try
             {
-                return Ok(service.PosponeWorkshop(workshopId));
+                return Ok(_service.PosponeWorkshop(workshopId));
             }
             catch (NotFoundItemException ex)
             {
@@ -135,7 +135,7 @@ namespace Workshops.Controllers
         {
             try
             {
-                return Ok(service.CancelWorkshop(workshopId));
+                return Ok(_service.CancelWorkshop(workshopId));
             }
             catch (NotFoundItemException ex)
             {
