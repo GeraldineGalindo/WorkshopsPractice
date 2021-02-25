@@ -10,23 +10,22 @@ using Workshops.Models;
 
 namespace Workshops.Controllers
 {
-
+    [Route("api/workshops")]
     [ApiController]
     public class WorkshopsController : ControllerBase
     {
-        private readonly IWorkshopService service;
+        private readonly IWorkshopService _service;
         public WorkshopsController(IWorkshopService service)
         {
-            this.service = service;
+            this._service = service;
         }
 
-        [Route("api/workshops")]
         [HttpGet]
         public ActionResult<IEnumerable<Workshop>> GetAllWorkshops()
         {
             try
             {
-                return Ok(service.GetAllWorkshops());
+                return Ok(_service.GetAllWorkshops());
             }
             catch (EmptyCollectionException ex)
             {
@@ -38,13 +37,13 @@ namespace Workshops.Controllers
             }
         }
 
-        [Route("api/workshops/{workshopId}")]
-        [HttpGet]
+     
+        [HttpGet("{workshopId}")]
         public ActionResult<Workshop> GetWorkshopById([FromRoute] int workshopId)
         {
             try
             {
-                return Ok(service.GetWorkshopById(workshopId));
+                return Ok(_service.GetWorkshopById(workshopId));
             }
             catch (NotFoundItemException ex)
             {
@@ -56,13 +55,12 @@ namespace Workshops.Controllers
             }
         }
 
-        [Route("api/workshops")]
         [HttpPost]
         public ActionResult<Workshop> CreateWorkshop([FromBody] Workshop workshop)
         {
             try
             {
-                var createdWorkshop = service.CreateWorkshop(workshop);
+                var createdWorkshop = _service.CreateWorkshop(workshop);
                 return Created("api/workshops/" + createdWorkshop.Id, createdWorkshop);
             }
             catch (Exception ex)
@@ -71,13 +69,13 @@ namespace Workshops.Controllers
             }
         }
 
-        [Route("api/workshops/{workshopId}")]
-        [HttpDelete]
+       
+        [HttpDelete("{workshopId}")]
         public ActionResult<bool> DeleteWorkshopById([FromRoute] int workshopId)
         {
             try
             {
-                return Ok(service.DeleteWorkshop(workshopId));
+                return Ok(_service.DeleteWorkshop(workshopId));
             }
             catch (NotFoundItemException ex)
             {
@@ -89,13 +87,12 @@ namespace Workshops.Controllers
             }
         }
 
-        [Route("api/workshops/{workshopId}")]
-        [HttpPut]
-        public ActionResult<Workshop> UpdateWorkshop([FromRoute] int workshopId,[FromBody] Workshop workshop)
+        [HttpPut("{workshopId}")]
+        public ActionResult<Workshop> UpdateWorkshop([FromRoute] int workshopId,[FromBody] Workshop workshop, [FromQuery] string action)
         {
             try
             {
-                return Ok(service.UpdateWorkshop(workshopId, workshop));
+                return Ok(_service.UpdateWorkshop(workshopId, workshop, action));
             }
             catch (DataMismatchException ex)
             {
@@ -111,40 +108,5 @@ namespace Workshops.Controllers
             }
         }
 
-        [Route("api/workshops/{workshopId}/pospone")]
-        [HttpPut]
-        public ActionResult<Workshop> PosponeWorkshopById([FromRoute] int workshopId)
-        {
-            try
-            {
-                return Ok(service.PosponeWorkshop(workshopId));
-            }
-            catch (NotFoundItemException ex)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, $"Something bad happened: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
-            }
-        }
-
-        [Route("api/workshops/{workshopId}/cancel")]
-        [HttpPut]
-        public ActionResult<Workshop> CancelWorkshopById([FromRoute] int workshopId)
-        {
-            try
-            {
-                return Ok(service.CancelWorkshop(workshopId));
-            }
-            catch (NotFoundItemException ex)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, $"Something bad happened: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Something bad happened: {ex.Message}");
-            }
-        }
     }
 }
