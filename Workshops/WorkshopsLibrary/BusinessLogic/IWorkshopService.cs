@@ -11,9 +11,7 @@ namespace Workshops.BusinessLogic
         public IEnumerable<Workshop> GetAllWorkshops();
         public Workshop GetWorkshopById(int workshopId);
         public Workshop CreateWorkshop(Workshop workshop);
-        public Workshop UpdateWorkshop(int workshopId, Workshop workshop);
+        public Workshop UpdateWorkshop(int workshopId, Workshop workshop, string action);
         public bool DeleteWorkshop(int workshopId);
-        public Workshop PosponeWorkshop(int workshopId);
-        public Workshop CancelWorkshop(int workshopId);
     }
 }

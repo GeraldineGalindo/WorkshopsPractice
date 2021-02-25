@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Workshops.BusinessLogic;
+using WorkshopsLibrary.Extensions;
 
 namespace Workshops
 {
@@ -43,6 +44,8 @@ namespace Workshops
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseNativeGlobalExceptionHandler();
 
             app.UseHttpsRedirection();
 

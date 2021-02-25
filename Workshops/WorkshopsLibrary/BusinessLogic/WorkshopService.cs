@@ -18,7 +18,7 @@ namespace Workshops.BusinessLogic
             _workshops.Add(new Workshop { Id = 2, Name = "Object Oriented Programming", State = Status.SCHEDULED });
             _workshops.Add(new Workshop { Id = 3, Name = "Branching and Modelling", State = Status.SCHEDULED });
         }
-        public Workshop CancelWorkshop(int workshopId)
+        private Workshop CancelWorkshop(int workshopId)
         {
             var workshopToCancel = _workshops.SingleOrDefault(w => w.Id == workshopId);
             if(workshopToCancel == null)
@@ -68,7 +68,7 @@ namespace Workshops.BusinessLogic
             
         }
 
-        public Workshop PosponeWorkshop(int workshopId)
+        private Workshop PosponeWorkshop(int workshopId)
         {
             var workshopToPospone = _workshops.SingleOrDefault(w => w.Id == workshopId);
             if (workshopToPospone == null)
@@ -79,10 +79,32 @@ namespace Workshops.BusinessLogic
             return workshopToPospone;
         }
 
-        public Workshop UpdateWorkshop(int workshopId, Workshop workshop)
+        public Workshop UpdateWorkshop(int workshopId, Workshop workshop, string action)
+        {
+            Workshop result = null;
+            if(action == "update")
+            {
+                result = EditWorkshop(workshopId, workshop);
+            }
+            if(action == "pospone")
+            {
+                result = PosponeWorkshop(workshopId);
+            }
+            if(action == "cancel")
+            {
+                result = CancelWorkshop(workshopId);
+            }
+            if(result == null)
+            {
+                throw new DataMismatchException("Must specify the action to take");
+            }
+            return result;
+        }
+
+        private Workshop EditWorkshop(int workshopId, Workshop workshop)
         {
             var workshopToUpdate = _workshops.SingleOrDefault(w => w.Id == workshopId);
-            if(workshopId != workshop.Id)
+            if (workshopId != workshop.Id)
             {
                 throw new DataMismatchException("Id from route and workshop do not match");
             }
@@ -91,7 +113,6 @@ namespace Workshops.BusinessLogic
                 throw new NotFoundItemException("The workshop was not found");
             }
             workshopToUpdate.Name = workshop.Name;
-            workshopToUpdate.State = workshop.State;
             return workshopToUpdate;
         }
     }
